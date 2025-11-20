@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+// Change this function for any equation f(x)
+double f(double x) {
+    return x*x*x - x - 2;     // Example: x³ – x – 2
+}
+
+// Change derivative according to f(x)
+double df(double x) {
+    return 3*x*x - 1;         // Derivative: 3x² – 1
+}
+
+int main() {
+    double x0, x1, tol;
+    int max_iter = 100, i = 1;
+
+    printf("Enter initial guess: ");
+    scanf("%lf", &x0);
+
+    printf("Enter tolerance: ");
+    scanf("%lf", &tol);
+
+    while (i <= max_iter) {
+        x1 = x0 - f(x0)/df(x0);  // Newton-Raphson formula
+
+        if (fabs(x1 - x0) < tol) {
+            printf("Root = %.6lf\n", x1);
+            return 0;
+        }
+
+        x0 = x1;
+        i++;
+    }
+
+    printf("Did not converge.\n");
+    return 0;
+}

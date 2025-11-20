@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <math.h>
+
+double f(double x) {
+    return x*x*x - x - 2; 
+}
+
+int main() {
+    double a, b, mid;
+    int max_iter = 100, i;
+    double tol = 0.0001;
+
+    printf("Enter interval [a, b]: ");
+    scanf("%lf %lf", &a, &b);
+
+    if (f(a) * f(b) >= 0) {
+        printf("Invalid interval. f(a) and f(b) must have opposite signs.\n");
+        return 1;
+    }
+
+    printf("\nIter\t a\t\t b\t\t mid\t\t f(mid)\n");
+    for (i = 1; i <= max_iter; i++) {
+        mid = (a + b) / 2.0;
+
+        printf("%d\t %.6lf\t %.6lf\t %.6lf\t %.6lf\n", i, a, b, mid, f(mid));
+
+        if (fabs(f(mid)) < tol) {
+            printf("\nRoot found at x = %.6lf\n", mid);
+            break;
+        }
+
+        if (f(a) * f(mid) < 0)
+            b = mid;
+        else
+            a = mid;
+    }
+
+    return 0;
+}
